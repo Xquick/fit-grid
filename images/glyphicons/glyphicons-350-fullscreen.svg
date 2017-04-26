@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="48px" height="48px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+<g id="glyphicons">
+	<g id="fullscreen">
+		<path d="M36,12v7h-2v-5h-5v-2H36z M14,19v-5h5v-2h-7v7H14z M34,29v5h-5v2h7v-1v-6H34z M14,29h-2v7h7v-2h-5V29z"/>
+		<path d="M29.561,20.56l2.086,2.086C31.841,22.841,32,22.775,32,22.5v-6c0-0.275-0.225-0.5-0.5-0.5h-6
+			c-0.275,0-0.341,0.159-0.146,0.354l2.086,2.086l-3.438,3.438l-3.44-3.439l2.085-2.085C22.841,16.159,22.775,16,22.5,16h-6
+			c-0.275,0-0.5,0.225-0.5,0.5v6c0,0.275,0.159,0.341,0.353,0.146l2.087-2.087l3.439,3.439l-3.44,3.441l-2.086-2.086
+			C16.159,25.159,16,25.225,16,25.5v6c0,0.275,0.225,0.5,0.5,0.5h6c0.275,0,0.341-0.159,0.146-0.354l-2.086-2.086l3.441-3.44
+			l3.438,3.44l-2.086,2.086C25.159,31.841,25.225,32,25.5,32h6c0.275,0,0.5-0.225,0.5-0.5v-6c0-0.275-0.159-0.341-0.354-0.146
+			l-2.086,2.086L26.122,24L29.561,20.56z"/>
+	</g>
+</g>
+<g id="Layer_2">
+</g>
+</svg>

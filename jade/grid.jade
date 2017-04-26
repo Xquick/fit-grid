@@ -1,0 +1,18 @@
+app-header(app-title="Grid")
+ng-include(src="'templates/filter-ads.html'")
+#grid(ng-controller="GridController as ctrl")
+    div.exercise-type-wrapper(layout="row" flex="100" ng-repeat="exerciseType in ctrl.$dataService.exerciseListByTypes track by $index")
+        div(layout="column" flex="100")
+            md-card
+                md-card-content
+                    h2(ng-bind="exerciseType.name" layout="row")
+                    table(md-table md-row-select multiple)
+                        thead(md-head)
+                            tr(md-row)
+                                th
+                                th(ng-repeat="day in ctrl.calendarDays" ng-bind="day.date | formatDate" md-column)
+                        tbody(md-body)
+                            tr.exercise.md-table-content-row(ng-repeat="exercise in exerciseType.exercises track by $index" md-row)
+                                td.exercise(ng-bind="exercise.name" md-cell)
+                                td.exercise(ng-repeat="day in ctrl.calendarDays track by $index" md-cell)
+                                    md-checkbox(ng-model="isChecked" ng-disabled="$index !== 0")

@@ -1,0 +1,10 @@
+.idea/
+.sass-cache/
+bower_components/
+templates/
+node_modules/
+media/
+res/
+css/
+www/
+js/

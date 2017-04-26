@@ -1,0 +1,47 @@
+{
+  "name": "@types/angular-translate",
+  "description": "TypeScript definitions for Angular Translate (pascalprecht.translate module)",
+  "version": "2.4.35",
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+  },
+  "contributors": [
+    {
+      "name": "Michel Salib",
+      "url": "https://github.com/michelsalib"
+    }
+  ],
+  "main": "",
+  "dist": {
+    "tarball": "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/angular-translate/-/angular-translate-2.4.35.tgz",
+    "shasum": "19a4832486649e492d6c8d4dd05d2fc1f583bf9f"
+  },
+  "dependencies": {
+    "@types/angular": "*"
+  },
+  "peerDependencies": {},
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "types",
+      "email": "ryan.cavanaugh@microsoft.com"
+    }
+  ],
+  "directories": {},
+  "scripts": {},
+  "_npmUser": {
+    "name": "types",
+    "email": "ts-npm-types@microsoft.com"
+  },
+  "_id": "@types/angular-translate@2.4.35",
+  "typeScriptVersion": "2.0",
+  "typesPublisherContentHash": "81a810511ba4e5072ea7593c65d252b646287b2bc82d173dab3cd4fb383e3cd1",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/angular-translate-2.4.35.tgz_1487208168493_0.3985594753175974"
+  },
+  "_shasum": "19a4832486649e492d6c8d4dd05d2fc1f583bf9f",
+  "_resolved": "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/angular-translate/-/angular-translate-2.4.35.tgz",
+  "_from": "@types/angular-translate@*"
+}

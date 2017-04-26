@@ -1,0 +1,156 @@
+{
+  "exercises": [
+    {
+      "name": "deadlift",
+      "type": "back"
+    },
+    {
+      "name": "pullups",
+      "type": "back"
+    },
+    {
+      "name": "barbell row",
+      "type": "back"
+    },
+    {
+      "name": "dumbbell row - single arm",
+      "type": "back"
+    },
+    {
+      "name": "dumbbell row - both arms",
+      "type": "back"
+    },
+    {
+      "name": "standing T-bar row",
+      "type": "back"
+    },
+    {
+      "name": "seated cabel row - wide grip",
+      "type": "back"
+    },
+    {
+      "name": "seated cabel row - close grip",
+      "type": "back"
+    },
+    {
+      "name": "cable pulldown - wide grip",
+      "type": "back"
+    },
+    {
+      "name": "standing lat pushdown",
+      "type": "back"
+    },
+    {
+      "name": "cable crossover pulldown - romboids",
+      "type": "back"
+    },
+    {
+      "name": "reverse peckdeck",
+      "type": "back"
+    },
+    {
+      "name": "flat benchpress",
+      "type": "chest"
+    },
+    {
+      "name": "flat dumbbell press",
+      "type": "chest"
+    },
+    {
+      "name": "flat flyes",
+      "type": "chest"
+    },
+    {
+      "name": "flat machine press",
+      "type": "chest"
+    },
+    {
+      "name": "incline benchpress",
+      "type": "chest"
+    },
+    {
+      "name": "incline dumbbells",
+      "type": "chest"
+    },
+    {
+      "name": "incline flyes",
+      "type": "chest"
+    },
+    {
+      "name": "incline machine press",
+      "type": "chest"
+    },
+    {
+      "name": "peckdeck",
+      "type": "chest"
+    },
+    {
+      "name": "cable flyes",
+      "type": "chest"
+    },
+    {
+      "name": "pushups",
+      "type": "chest"
+    },
+    {
+      "name": "cavalier crossover",
+      "type": "chest"
+    },
+    {
+      "name": "pullover",
+      "type": "chest"
+    },
+    {
+      "name": "dips",
+      "type": "chest"
+    },
+    {
+      "name": "lateral side raise",
+      "type": "shoulders"
+    },
+    {
+      "name": "front dumbell raise",
+      "type": "shoulders"
+    },
+    {
+      "name": "barbell seated shoulder press",
+      "type": "shoulders"
+    },
+    {
+      "name": "military press",
+      "type": "shoulders"
+    },
+    {
+      "name": "push-press",
+      "type": "shoulders"
+    },
+    {
+      "name": "behind neck seated shoulder press",
+      "type": "shoulders"
+    },
+    {
+      "name": "facepull",
+      "type": "shoulders"
+    },
+    {
+      "name": "machine shoulder press",
+      "type": "shoulders"
+    },
+    {
+      "name": "seated rear delt raise 45degree",
+      "type": "shoulders"
+    },
+    {
+      "name": "reverse peckdeck",
+      "type": "shoulders"
+    },
+    {
+      "name": "inclide bench dumbbell- laying on side rear delt",
+      "type": "shoulders"
+    },
+    {
+      "name": "cable crossover",
+      "type": "shoulders"
+    }
+  ]
+}

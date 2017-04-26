@@ -1,0 +1,25 @@
+body, .ui-content {
+    background: #e3e9ee;
+}
+
+$menu-class: '.main-menu';
+
+#{$menu-class} {
+    background: $color-1;
+    position: fixed;
+    width: $menu-width;
+    height: 100%;
+    padding-top: 10px;
+    md-icon, i, div {
+        color: $color-white;
+    }
+    &-item {
+        text-align: center;
+        &-icon {
+            font-size: 30px;
+        }
+        &-label {
+            font-size: 12px;
+        }
+    }
+}

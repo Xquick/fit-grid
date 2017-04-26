@@ -1,0 +1,12 @@
+div#workout(ng-controller="MainController as ctrl")
+    md-button(ng-click="ctrl.toggleWorkout()" class="md-accent" ng-bind="'grid.my-workout.open'|translate")
+
+    md-sidenav.md-sidenav-right(md-component-id="right" md-disable-backdrop md-whiteframe="4")
+
+        md-toolbar
+            h1.md-toolbar-tools(ng-bind="'grid.workout.header'|translate")
+
+        md-content(layout-margin)
+            md-button(ng-click="ctrl.toggleWorkout()" class="md-accent" ng-bind="'grid.my-workout.close'|translate")
+
+

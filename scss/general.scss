@@ -1,0 +1,17 @@
+body {
+    font-size: $font-size;
+}
+
+.padding-none {
+    padding: 0;
+}
+
+.ui-map {
+    height: 100%;
+}
+
+@media(max-width: 991px) {
+    .ui-map{
+        //display: none;
+    }
+}
