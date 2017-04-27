@@ -6,12 +6,23 @@ body {
     padding: 0;
 }
 
-.ui-map {
-    height: 100%;
+
+.fixed {
+    position: fixed;
+
+    &--right-top{
+        right: 0;
+        top: 20px;
+    }
+}
+
+.ui-pointer{
+    cursor: pointer;
 }
 
 @media(max-width: 991px) {
     .ui-map{
-        //display: none;
+
     }
 }
+

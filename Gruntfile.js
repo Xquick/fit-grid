@@ -145,7 +145,8 @@ module.exports = function (grunt) {
                 files: [{
                     dot: true,
                     src: [
-                        'www/*'
+                        'www/*',
+                        'js/*'
                     ]
                 }]
             }

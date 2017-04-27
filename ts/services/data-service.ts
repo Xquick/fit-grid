@@ -12,7 +12,7 @@ module portal {
         exerciseList: portal.Exercise[];
         exercise: portal.Exercise;
 
-        loadExercises(): ng.IPromise<portal.Exercise[]>;
+        loadExercisesJson(): ng.IPromise<portal.Exercise[]>;
         getExerciseDetail(exerciseId: number): portal.Exercise;
     }
 
@@ -29,7 +29,7 @@ module portal {
             this.exerciseListByTypes = [];
         }
 
-        loadExercises(): ng.IPromise<portal.Exercise[]> {
+        loadExercisesJson(): ng.IPromise<portal.Exercise[]> {
             return this.$http.post(portal.config.api.url + '/data/exercises.json', {})
                 .then(function (response: IJsonExercises) {
                     return <Exercise[]>response.data.exercises;

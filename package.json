@@ -11,6 +11,7 @@
     "accounting": "0.3.2",
     "angular": "1.5.2",
     "angular-animate": "1.4.7",
+    "angular-drag-and-drop-lists": "^2.1.0",
     "angular-hal": "0.1.5",
     "angular-inview": "1.5.6",
     "angular-material": "1.1.4",

@@ -4,12 +4,12 @@ module portal {
     'use strict';
 
     export class GridController extends MainController {
-        static $inject = ['$scope', '$DataService', '$mdDialog','$mdSidenav', '$translate'];
         public calendarDays: ICalendarDays[] = [];
 
-        constructor($scope, $dataService, $mdDialog,$mdSidenav, $translate) {
-            super($scope, $dataService, $mdDialog, $mdSidenav, $translate);
-            this.getExercises();
+        static $inject = ['$rootScope', '$scope', '$DataService', '$mdDialog', '$mdSidenav', '$translate'];
+
+        constructor($rootScope, $scope, $dataService, $mdDialog, $mdSidenav, $translate) {
+            super($rootScope, $scope, $dataService, $mdDialog, $mdSidenav, $translate);
             this.initHistoryDates();
         }
 
@@ -22,9 +22,9 @@ module portal {
                 clickOutsideToClose: true
             })
                 .then(function (answer) {
-                    this.status = 'You said the information was "' + answer + '".';
+                    // this.status = 'You said the information was "' + answer + '".';
                 }, function () {
-                    this.status = 'You cancelled the dialog.';
+                    // this.status = 'You cancelled the dialog.';
                 });
         }
 
@@ -44,7 +44,7 @@ module portal {
                 let y = date.getFullYear();
 
                 let calendarDay: ICalendarDays = <ICalendarDays>{};
-                calendarDay.date =  dd + '.' + mm + '.' + y;
+                calendarDay.date = dd + '.' + mm + '.' + y;
                 calendarDay.weekday = date.getDay();
                 calendarDay.abbreviation = "";
                 this.calendarDays.push(calendarDay);

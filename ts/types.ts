@@ -11,6 +11,14 @@ module portal {
         id: number;
         name: string;
         type: string;
+        order: number;
+        repset: IRepSet[];
+    }
+
+    export interface IRepSet {
+        setNumber: number;
+        reps: number;
+        speed: number;
     }
 
     export interface IExerciseType {
