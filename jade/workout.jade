@@ -7,12 +7,14 @@ div#workout(ng-controller="MainController as ctrl")
             h1.md-toolbar-tools {{'grid.workout.header'|translate}}
                 i.material-icons(ng-click="ctrl.toggleWorkout()" class="ui-pointer") close
         md-content(layout-margin)
-            table(md-table flex="100")
-                tbody(md-body dnd-list="ctrl.$rootScope.selectedExerciseList")
-                    tr.md-table-content-row(
+            div(md-table flex="100")
+                ul(md-body dnd-list="ctrl.$rootScope.selectedExerciseList")
+                    li.md-table-content-row(
                     ng-repeat="selectedExercise in ctrl.$rootScope.selectedExerciseList"
-                    dnd-draggable="item"
+                    dnd-draggable="selectedExercise"
                     dnd-moved="ctrl.$rootScope.selectedExerciseList.splice($index, 1)"
                     dnd-effect-allowed="move"
                         )
-                        td(ng-bind="selectedExercise.name")
+                        span.handle(dnd-handle)
+                            i.material-icons drag_handle
+                        span(ng-bind="selectedExercise.name")
