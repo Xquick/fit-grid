@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         config: {
-            url: 'http://fitness-grid.localhost/',
+            url: 'http://fit-grid.localhost/',
             livereload: {
                 port: 35788
             }
@@ -26,7 +26,7 @@ module.exports = function (grunt) {
         open: {
             delayed: {
                 path: '<%= config.url %>',
-                app: 'Google Chrome'
+                app: 'Chrome'
             }
         },
         typescript: {
@@ -58,8 +58,17 @@ module.exports = function (grunt) {
             }
         },
         watch: {
-            options: {
-                livereload: '<%= config.livereload.port%>'
+            livereload: {
+                files: [
+                    'css/*.css',
+                    '*.html',
+                    'templates/**/*.html',
+                    'js/*.js',
+                    'js/**/*.js'
+                ],
+                options: {
+                    livereload: '<%= config.livereload.port%>'
+                }
             },
             ts: {
                 files: [
@@ -72,10 +81,7 @@ module.exports = function (grunt) {
             html: {
                 files: [
                     'index.html'
-                ],
-                option: {
-                    livereload: '<%= config.livereload.port%>'
-                }
+                ]
             },
             jade: {
                 files: [
@@ -83,11 +89,11 @@ module.exports = function (grunt) {
                     'jade/*.jade'
                 ],
                 option: {
-                    livereload: '<%= config.livereload.port%>'
+                    livereload: false
                 },
                 tasks: ['jade']
             },
-            css: {
+            sass: {
                 files: ['scss/*.scss', 'scss/**/*.scss'],
                 tasks: ['sass']
             }
@@ -216,9 +222,9 @@ module.exports = function (grunt) {
             },
             compile: {
                 files: [{
-                    cwd:'jade',
+                    cwd: 'jade',
                     src: "**/*.jade",
-                    dest:"templates/",
+                    dest: "templates/",
                     expand: true,
                     ext: ".html"
                 }]
@@ -254,7 +260,6 @@ module.exports = function (grunt) {
         //'concat',
         //'ngAnnotate',
         'copy:dist',
-        //'processhtml',
         'cssmin',
         //'usemin',
         'htmlmin:dist'
@@ -264,9 +269,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'generate-sources',
+        'sass',
         'jade',
         'open',
-        //'build',
+        // 'build',
         'watch'
     ]);
 };

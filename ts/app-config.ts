@@ -15,7 +15,7 @@ module portal {
 
     export var config: IConfig = {
         api: {
-            url: 'http://fitness-grid.localhost/'
+            url: 'http://fit-grid.localhost/'
         }
     }
 }

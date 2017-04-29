@@ -3,7 +3,7 @@
 
 var app: ng.IModule = angular.module('portal',
     ['ui.router', 'angular-inview', 'ngMaterial', 'ngMessages', 'ngAnimate', 'angularFileUpload',
-        'ngDialog', 'angular-toArrayFilter', 'ngCacheBuster','pascalprecht.translate', 'md.data.table','dndLists']);
+        'ngDialog', 'angular-toArrayFilter', 'pascalprecht.translate', 'md.data.table','dndLists']);
 
 
 app.config(['$translateProvider', function ($translateProvider: translate.ITranslateProvider): void {

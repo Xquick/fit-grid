@@ -1,20 +1,21 @@
 div#workout(ng-controller="MainController as ctrl")
-    md-button(ng-click="ctrl.toggleWorkout()" class="fixed fixed--right-top" ng-bind="'grid.my-workout.open'|translate")
+    md-button(ng-click="ctrl.toggleWorkout()" aria-label="close" class="fixed fixed--right-top" ng-bind="'grid.my-workout.open'|translate")
 
     md-sidenav.md-sidenav-right(md-component-id="right" md-disable-backdrop md-is-open="true" md-whiteframe="4")
-
         md-toolbar
             h1.md-toolbar-tools {{'grid.workout.header'|translate}}
                 i.material-icons(ng-click="ctrl.toggleWorkout()" class="ui-pointer") close
-        md-content(layout-margin)
-            div(md-table flex="100")
-                ul(md-body dnd-list="ctrl.$rootScope.selectedExerciseList")
-                    li.md-table-content-row(
-                    ng-repeat="selectedExercise in ctrl.$rootScope.selectedExerciseList"
-                    dnd-draggable="selectedExercise"
-                    dnd-moved="ctrl.$rootScope.selectedExerciseList.splice($index, 1)"
-                    dnd-effect-allowed="move"
-                        )
-                        span.handle(dnd-handle)
-                            i.material-icons drag_handle
-                        span(ng-bind="selectedExercise.name")
+        md-content
+                div(flex="100" )
+                    h3(ng-bind="type")
+                    ul( dnd-list="ctrl.$rootScope.selectedExerciseList"
+                    )
+                        li.md-table-content-row(
+                        ng-repeat="selectedExercise in ctrl.$rootScope.selectedExerciseList"
+                        dnd-draggable="selectedExercise"
+                        dnd-moved="ctrl.onDropExercise($index)"
+                        dnd-effect-allowed="move"
+                            )
+                            span.handle(dnd-handle)
+                                i.material-icons drag_handle
+                            span(ng-bind="selectedExercise.name")

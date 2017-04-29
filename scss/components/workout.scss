@@ -2,19 +2,15 @@
 #workout {
     md-toolbar:not(.md-menu-toolbar) {
         background: $color-1;
+
     }
+
     md-content{
-        margin: 0;
+        overflow: visible;
     }
 
-    table {
+    ul{
+        padding: 0;
         margin: 0;
-
-        td{
-            &:first-child{
-                width: 25px;
-            }
-            padding: 5px 10px;
-        }
     }
 }

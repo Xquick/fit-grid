@@ -4,11 +4,10 @@
 angular.module('portal')
     .filter('formatDate', function () {
         return function (dateInput: string): string {
-            console.log(dateInput);
+            // console.log(dateInput);
             let formatedDate: string;
 
             let convertedDate: Date = stringToDate(dateInput,'dd.mm.yyyy','.');
-            console.log(convertedDate);
 
             return formatedDate;
         }

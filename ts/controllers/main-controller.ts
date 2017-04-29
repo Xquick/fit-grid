@@ -8,6 +8,7 @@ module portal {
     }
     export interface IExtendedRootScope extends ng.IRootScopeService {
         selectedExerciseList: Exercise[];
+        selectedExerciseTypeList: string[];
     }
 
     export class MainController {
@@ -29,15 +30,25 @@ module portal {
             this.$rootScope = $rootScope;
             this.$scope = $scope;
             this.$rootScope.selectedExerciseList = [];
+            this.$rootScope.selectedExerciseTypeList = [];
 
             this.loadExercises();
+        }
+
+        public onDropExercise(index: number) {
+            let tmpArr: Exercise[] = [];
+            this.$rootScope.selectedExerciseList.splice(index, 1);
+            //Todo: When item is dropped it changes from Exercise type to common Object - this is temp fix
+            this.$rootScope.selectedExerciseList.forEach(item => {
+                tmpArr.push(new Exercise(item['_id'], item['_name'], item['_type']));
+            });
+            this.$rootScope.selectedExerciseList = tmpArr;
         }
 
         protected loadExercises(): void {
             this.$dataService.loadExercisesJson().then((exercises) => {
                 this.$dataService.exerciseList = exercises;
                 this.$dataService.exerciseListByTypes = [];
-                let exerciseArr = [];
 
                 this.$dataService.exerciseListByTypes = this.sortExercisesByTypes(exercises);
             });
@@ -86,7 +97,6 @@ module portal {
          * @param exercise
          */
         public toggleExerciseInCurrentWorkout(exercise: Exercise) {
-            console.log(exercise);
             let alreadySelected = _.findWhere(this.$rootScope.selectedExerciseList, {name: exercise.name});
 
             if (alreadySelected) {
@@ -96,7 +106,13 @@ module portal {
             }
             else {
                 this.$rootScope.selectedExerciseList.push(exercise);
+
+                if(this.$rootScope.selectedExerciseTypeList.indexOf(exercise.type) ===-1){
+                    this.$rootScope.selectedExerciseTypeList.push(exercise.type);
+                }
             }
+
+            console.log( this.$rootScope.selectedExerciseTypeList);
         }
     }
     angular.module('portal').controller('MainController', portal.MainController);

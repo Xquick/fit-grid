@@ -1,7 +1,7 @@
 //
    Created by amrazek on 22/03/16.
 
-md-dialog(aria-label='Mango (Fruit)' ng-controller='GridController as ctrl' ng-init="advert = ctrl.$dataService.advert")
+md-dialog( ng-controller='GridController as ctrl' ng-init="advert = ctrl.$dataService.advert")
 
     form
         md-toolbar
@@ -9,7 +9,7 @@ md-dialog(aria-label='Mango (Fruit)' ng-controller='GridController as ctrl' ng-i
                 h2(ng-bind="advert.name")
                 span(flex)
                 md-button.md-icon-button(ng-click='ctrl.cancel()')
-                    md-icon(md-svg-src='glyphicons:remove', aria-label='Close dialog', class="ui-icon--size-normal")
+                    md-icon(md-svg-src='glyphicons:remove',  class="ui-icon--size-normal")
         md-dialog-content
             md-tabs(md-dynamic-height='', md-border-bottom='')
                 md-tab(label='one')
