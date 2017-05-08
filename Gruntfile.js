@@ -26,7 +26,7 @@ module.exports = function (grunt) {
         open: {
             delayed: {
                 path: '<%= config.url %>',
-                app: 'Google Chrome'
+                app: 'Chrome'
             }
         },
         typescript: {

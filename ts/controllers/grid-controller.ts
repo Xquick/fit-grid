@@ -6,15 +6,15 @@ module portal {
     export class GridController extends MainController {
         public calendarDays: ICalendarDays[] = [];
 
-        static $inject = ['$rootScope', '$scope', '$DataService', '$mdDialog', '$mdSidenav', '$translate'];
+        static $inject = ['$rootScope', '$scope', '$cacheService', '$mdDialog', '$mdSidenav', '$translate'];
 
-        constructor($rootScope, $scope, $dataService, $mdDialog, $mdSidenav, $translate) {
-            super($rootScope, $scope, $dataService, $mdDialog, $mdSidenav, $translate);
+        constructor($rootScope, $scope, $cacheService, $mdDialog, $mdSidenav, $translate) {
+            super($rootScope, $scope, $cacheService, $mdDialog, $mdSidenav, $translate);
             this.initHistoryDates();
         }
 
         public openExerciseDetailDialog($event, exerciseId) {
-            this.$dataService.exercise = this.$dataService.getExerciseDetail(exerciseId);
+            // this.$dataService.exercise = this.$dataService.getExerciseDetail(exerciseId);
             this.$dialog.show({
                 templateUrl: 'templates/dialog/exercise-detail.html',
                 preserveScope: true,

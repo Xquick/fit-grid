@@ -1,16 +1,11 @@
-
 /// <reference path="../ref.ts" />
 
 module portal {
     'use strict';
 
     export interface IDataService {
-        exerciseListByTypes: portal.IExerciseType[];
-        exerciseList: portal.Exercise[];
-        exercise: portal.Exercise;
-
-        loadExercises(): ng.IPromise<portal.Exercise[]>;
-        loadExerciseHistory(user_id: number): ng.IPromise<json.IExerciseHistory[]>;
+        loadExerciseList(): ng.IPromise<portal.Exercise[]>;
+        loadExerciseHistory(user_id: number): ng.IPromise<json.IWorkoutHistory[]>;
         getExerciseDetail(exerciseId: number): portal.Exercise;
     }
 
@@ -27,17 +22,17 @@ module portal {
             this.exerciseListByTypes = [];
         }
 
-        loadExercises(): ng.IPromise<portal.Exercise[]> {
+        loadExerciseList(): ng.IPromise<portal.Exercise[]> {
             return this.$http.get(portal.config.api.url + 'exercises/', {})
                 .then(function (response: json.IExerciseList) {
-                    return <Exercise[]>response.data.exercises;
+                    return <Exercise[]>response.data.exerciseList;
                 });
         }
 
-        loadExerciseHistory(user_id: number): ng.IPromise<json.IExerciseHistory[]> {
-            return this.$http.get(portal.config.api.url + 'user/' + user_id + '/history')
-                .then(function (response: json.IExerciseHistory[]) {
-                    return <json.IExerciseHistory[]>response;
+        loadExerciseHistory(user_id: number): ng.IPromise<json.IWorkoutHistory[]> {
+            return this.$http.get(portal.config.api.url + 'users/' + user_id + '/history')
+                .then(function (response: json.IWorkoutHistoryList) {
+                    return <json.IWorkoutHistory[]>response.data;
                 });
         }
 
@@ -50,4 +45,4 @@ module portal {
     }
 }
 
-angular.module('portal').service('$DataService', portal.DataService);
+angular.module('portal').service('$dataService', portal.DataService);

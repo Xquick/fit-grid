@@ -4,7 +4,7 @@ module portal.json {
 
     export interface IExerciseList {
         data: {
-            exercises: IExercise[]
+            exerciseList: IExercise[]
         }
     }
 
@@ -22,18 +22,22 @@ module portal.json {
         workoutScheduleExerciseId: number;
     }
 
-    export interface IExerciseScheduled extends IExercise {
-        sets: ISet[]
+    export interface IExerciseWithSchedule extends IExercise {
+        setList: ISet[]
     }
 
-    export interface ISchedule {
+    export interface IWorkoutSchedule {
         date: string;
-        exercises: IExerciseScheduled[];
+        exerciseList: IExerciseWithSchedule[];
     }
 
-    export interface IExerciseHistory {
+    export interface IWorkoutHistory {
         workout_id: number ;
         workout_name: string;
-        schedule: ISchedule[]
+        schedule: IWorkoutSchedule[]
+    }
+
+    export interface IWorkoutHistoryList {
+        data: IWorkoutHistory[]
     }
 }

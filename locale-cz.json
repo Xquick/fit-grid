@@ -1,6 +1,8 @@
 {
   "menu.grid": "Grid",
   "grid.my-workout.open": "Otevřít",
-  "grid.my-workout.close": "Zavřít",
-  "grid.workout.header": "Můj workout"
+  "new-workout.close": "Zavřít",
+  "new-workout.header": "Můj workout",
+  "new-workout.datepicker.placeholder": "Datum plánu",
+  "new-workout.save": "Uložit plán"
 }

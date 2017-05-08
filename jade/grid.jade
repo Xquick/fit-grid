@@ -1,7 +1,7 @@
 app-header(app-title="Grid")
 
 #grid(ng-controller="GridController as ctrl")
-    div.exercise-type-wrapper(layout="row" flex="100" ng-repeat="exerciseType in ctrl.$dataService.exerciseListByTypes track by $index")
+    div.exercise-type-wrapper(layout="row" flex="100" ng-repeat="exerciseType in ctrl.$cacheService.exerciseListByTypes track by $index")
         div(layout="column" flex="100")
             md-card
                 md-card-content
@@ -16,4 +16,4 @@ app-header(app-title="Grid")
                                 td.exercise(md-cell ng-click="ctrl.openExerciseDetailDialog($event,1)")
                                     span.first-letter--upper(ng-bind="exercise.name" )
                                 td.day(ng-repeat="day in ctrl.calendarDays track by $index" md-cell)
-                                    md-checkbox(ng-model="isChecked" aria-label="checkbox" ng-disabled="$index !== 0" ng-click="ctrl.toggleExerciseInCurrentWorkout(exercise)")
+                                    md-checkbox(ng-checked="ctrl.$rootScope.currentExerciseMap[exercise.id] && $index == 0 " aria-label="checkbox" ng-disabled="$index !== 0" ng-click="ctrl.toggleExerciseInCurrentWorkout(exercise)")

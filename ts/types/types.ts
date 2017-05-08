@@ -2,7 +2,7 @@
  * Created by amrazek on 03/07/16.
  */
 
-/// <reference path="ref.ts" />
+/// <reference path="../ref.ts" />
 
 module portal {
     'use strict';
@@ -11,14 +11,19 @@ module portal {
         id: number;
         name: string;
         type: string;
-        order: number;
-        repset: IRepSet[];
+        schedule: IExerciseSchedule[];
     }
 
-    export interface IRepSet {
-        setNumber: number;
-        reps: number;
-        speed: number;
+    export interface ICurrentWorkoutExercise{
+        id: number;
+        name: string;
+        type: string;
+        isSuperset: boolean;
+    }
+
+    export interface IExerciseSchedule {
+        date: string;
+        setList: ISet[]
     }
 
     export interface IExerciseType {
@@ -31,27 +36,10 @@ module portal {
         date: string;
         abbreviation: string;
     }
-
-
     export interface ISet {
         id: number;
         setNumber: number;
         repCount: number;
         weight: number;
-    }
-
-    export interface IExerciseScheduled extends IExercise {
-        sets: ISet[]
-    }
-
-    export interface ISchedule {
-        date: string;
-        exercises: IExerciseScheduled[];
-    }
-
-    export interface IExerciseHistory {
-        workout_id: number ;
-        workout_name: string;
-        schedule: ISchedule[]
     }
 }

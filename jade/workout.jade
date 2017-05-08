@@ -1,37 +1,42 @@
 div#workout(ng-controller="MainController as ctrl")
-    md-button(ng-click="ctrl.toggleWorkout()" aria-label="close" class="fixed fixed--right-top" ng-bind="'grid.my-workout.open'|translate")
+    md-button(ng-click="ctrl.toggleWorkout()" aria-label="close" class="fixed fixed--right-top" ng-bind="'new-workout.open'|translate")
 
     md-sidenav.md-sidenav-right(md-component-id="right" md-disable-backdrop md-is-open="true" md-whiteframe="4")
         md-toolbar
-            h1.md-toolbar-tools {{'grid.workout.header'|translate}}
+            h1.md-toolbar-tools {{'new-workout.header'|translate}}
                 i.material-icons(ng-click="ctrl.toggleWorkout()" class="ui-pointer") close
         md-content
+            md-datepicker(
+            ng-model="ctrl.myDate"
+            md-placeholder="{{'new-workout.datepicker.placeholder'|translate}}"
+            aria-label=""
+            flex="100")
             ul(
             dnd-list="ctrl.$rootScope.currentExerciseList"
-            dnd-allowed-types="['container']")
-
-                li(
-                ng-repeat="type in ctrl.$rootScope.currentExerciseList"
-                dnd-dragable="type"
-                dnd-moved="ctrl.onDropType($index)"
+            )
+                li.md-table-content-row(
+                ng-repeat="exercise in ctrl.$rootScope.currentExerciseList"
+                dnd-draggable="exercise"
+                dnd-moved="ctrl.onDropExercise($index, exercise.type)"
                 dnd-effect-allowed="move"
-                dnd-type="'container'"
-                dnd-draggable="type"
+                ng-class="{superset: exercise.isSuperset}"
                 )
-                    h3(ng-bind="type.name")
-                    ul(
-                    dnd-list="type.exerciseList"
-                    dnd-allowed-types="[type.name]"
-                    )
-                        li.md-table-content-row(
-                        ng-repeat="exercise in type.exerciseList"
-                        dnd-draggable="exercise"
-                        dnd-type="exercise.type"
-                        dnd-disable-if="exercise.type == 'unknown'"
-                        dnd-moved="ctrl.onDropExercise($index, exercise.type)"
-                        dnd-effect-allowed="move"
-                        )
-                            dnd-nodrag
-                                span.handle(dnd-handle)
-                                    i.material-icons drag_handle
-                                span.first-letter--upper(ng-bind="exercise.name")
+                    dnd-nodrag.height-100(flex layout="row" layout-align="start center")
+                        div.handle(dnd-handle flex="10" layout="column")
+                            i.material-icons drag_handle
+                        div(flex="70" layout="column")
+                            span.first-letter--upper(ng-bind="exercise.name")
+                        div.ui-icons(flex="20" layout="column")
+                            span(layout="row")
+                                md-button.ui-button.ui-button--icon(layout="column")
+                                    i.material-icons(ng-click="ctrl.toggleExerciseSuperset(exercise.id)") link
+                                md-button.ui-button.ui-button--icon(
+                                layout="column"
+                                ng-click="ctrl.toggleExerciseInCurrentWorkout(exercise)")
+                                    i.material-icons delete
+            md-button.md-raised.md-primary.ui-button--default(
+            ng-bind="'new-workout.save'|translate"
+            ng-if="ctrl.$rootScope.currentExerciseList.length > 0"
+            ng-click="ctrl.saveWorkout()"
+            aria-label=""
+            )
