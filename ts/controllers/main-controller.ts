@@ -7,8 +7,7 @@ module portal {
         northeastLat: string;
     }
     export interface IExtendedRootScope extends ng.IRootScopeService {
-        selectedExerciseList: Exercise[];
-        selectedExerciseTypeList: string[];
+        currentExerciseList: IExerciseType[];
     }
 
     export class MainController {
@@ -29,30 +28,87 @@ module portal {
             this.$sidenav = $mdSidenav;
             this.$rootScope = $rootScope;
             this.$scope = $scope;
-            this.$rootScope.selectedExerciseList = [];
-            this.$rootScope.selectedExerciseTypeList = [];
+            this.$rootScope.currentExerciseList = [];
 
-            this.loadExercises();
-        }
-
-        public onDropExercise(index: number) {
-            let tmpArr: Exercise[] = [];
-            this.$rootScope.selectedExerciseList.splice(index, 1);
-            //Todo: When item is dropped it changes from Exercise type to common Object - this is temp fix
-            this.$rootScope.selectedExerciseList.forEach(item => {
-                tmpArr.push(new Exercise(item['_id'], item['_name'], item['_type']));
+            this.loadExercises().then(() => {
+                this.loadExercisesHistory(1);
             });
-            this.$rootScope.selectedExerciseList = tmpArr;
         }
 
-        protected loadExercises(): void {
-            this.$dataService.loadExercisesJson().then((exercises) => {
+        public onDropExercise(index: number, type: string) {
+            let currentTypeExerciseList = _.findWhere(this.$rootScope.currentExerciseList, {name: type});
+
+            currentTypeExerciseList.exerciseList.splice(index, 1);
+            currentTypeExerciseList.exerciseList = this.retypeDroppedExercises(currentTypeExerciseList.exerciseList);
+        }
+
+        public onDropType(index) {
+            this.$rootScope.currentExerciseList.splice(index, 1);
+
+            _.each(this.$rootScope.currentExerciseList, (type: IExerciseType) => {
+                type.exerciseList = this.retypeDroppedExercises(type.exerciseList);
+            });
+            console.log(this.$rootScope.currentExerciseList);
+
+        }
+
+        protected loadExercises(): ng.IPromise<boolean> {
+            return this.$dataService.loadExercises().then((exercises) => {
+                console.log('exercises', exercises);
                 this.$dataService.exerciseList = exercises;
                 this.$dataService.exerciseListByTypes = [];
 
                 this.$dataService.exerciseListByTypes = this.sortExercisesByTypes(exercises);
+            }).then(() => {
+                return true;
             });
         }
+
+
+        protected loadExercisesHistory(user_id: number): void {
+            this.$dataService.loadExerciseHistory(user_id).then((history) => {
+                console.log(history);
+            });
+        }
+
+        /***
+         * Opens and closes md-sidenav - Current workout
+         */
+        public toggleWorkout() {
+            this.$sidenav('right').toggle();
+        }
+
+        /***
+         * Adds/Removes exercise into the current workout
+         * @param exercise
+         */
+        public toggleExerciseInCurrentWorkout(exercise: Exercise) {
+            let selectedExerciseList = this.$rootScope.currentExerciseList;
+            let typeExists = _.findWhere(selectedExerciseList, {name: exercise.type});
+
+            if (!typeExists) {
+                this.$rootScope.currentExerciseList.push(<IExerciseType>{
+                    name: exercise.type,
+                    exerciseList: [exercise]
+                });
+            } else {
+                let selectedType: IExerciseType = _.findWhere(selectedExerciseList, {name: exercise.type});
+
+                let exerciseExists = _.findWhere(selectedType.exerciseList, {name: exercise.name});
+                if (!exerciseExists) {
+                    let newExerciseList = selectedType.exerciseList.push(exercise);
+                    _.extend(selectedType.exerciseList, newExerciseList);
+                } else {
+                    _.remove(selectedType.exerciseList, {name: exercise.name});
+
+                    //If the type (e.g. "back, chest") has no exercises left, delete it also
+                    if (selectedType.exerciseList.length === 0) {
+                        _.remove(this.$rootScope.currentExerciseList, {name: selectedType.name});
+                    }
+                }
+            }
+        }
+
 
         /***
          * Returns exercises sorted by their type (e.g. type: 'back', type: 'chest')
@@ -60,6 +116,7 @@ module portal {
          * @param exercises: Exercise[]
          * @returns {IExerciseType[]} resulting into structure e.g. {'chest': {[Exercise1, Exercise5]}, 'back': {[...]}}
          */
+
         private sortExercisesByTypes(exercises: Exercise[]): IExerciseType[] {
             let exerciseArr: {[key: string]: Exercise[]} = {};
             let exercisesByType: IExerciseType[] = [];
@@ -75,7 +132,7 @@ module portal {
                 let exerciseType: IExerciseType = <IExerciseType>{};
 
                 exerciseType.name = key;
-                exerciseType.exercises = exerciseArr[key];
+                exerciseType.exerciseList = exerciseArr[key];
 
                 exercisesByType.push(exerciseType);
             }
@@ -84,35 +141,16 @@ module portal {
         }
 
 
-        /***
-         * Opens and closes md-sidenav - Current workout
-         */
-        public toggleWorkout() {
-            this.$sidenav('right').toggle();
-        }
+        //Todo: When item is dropped it changes from Exercise type to common Object - this is temp fix
+        private retypeDroppedExercises(exerciseList: Exercise[]): Exercise[] {
+            let tmpArr: Exercise[] = [];
 
+            _.each(exerciseList, item => {
+                tmpArr.push(new Exercise(item['_id'], item['_name'], item['_type']));
+            });
+            _.extend(exerciseList, tmpArr);
 
-        /***
-         * Adds/Removes exercise into the current workout
-         * @param exercise
-         */
-        public toggleExerciseInCurrentWorkout(exercise: Exercise) {
-            let alreadySelected = _.findWhere(this.$rootScope.selectedExerciseList, {name: exercise.name});
-
-            if (alreadySelected) {
-                this.$rootScope.selectedExerciseList = _.without(this.$rootScope.selectedExerciseList, _.findWhere(this.$rootScope.selectedExerciseList, {
-                    name: exercise.name
-                }));
-            }
-            else {
-                this.$rootScope.selectedExerciseList.push(exercise);
-
-                if(this.$rootScope.selectedExerciseTypeList.indexOf(exercise.type) ===-1){
-                    this.$rootScope.selectedExerciseTypeList.push(exercise.type);
-                }
-            }
-
-            console.log( this.$rootScope.selectedExerciseTypeList);
+            return exerciseList;
         }
     }
     angular.module('portal').controller('MainController', portal.MainController);

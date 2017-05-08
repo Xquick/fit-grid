@@ -6,22 +6,30 @@ body {
     padding: 0;
 }
 
-
 .fixed {
     position: fixed;
 
-    &--right-top{
+    &--right-top {
         right: 0;
         top: 20px;
     }
 }
 
-.ui-pointer{
+.ui-pointer {
     cursor: pointer;
 }
 
+.first-letter--upper {
+    display: inline-block;
+    &:first-letter {
+        text-transform: uppercase;
+    }
+}
+
+
+
 @media(max-width: 991px) {
-    .ui-map{
+    .ui-map {
 
     }
 }

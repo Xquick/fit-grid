@@ -29,6 +29,12 @@
 @mixin skew ($x, $y) {
     @include transform(skew(#{$x}deg, #{$y}deg));
 }
+
+@mixin fixed-width ($width) {
+    width: $width;
+    min-width: $width;
+    max-width: $width;
+}
 //transform origin
 @mixin transform-origin ($origin) {
     -moz-transform-origin: $origin;

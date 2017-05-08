@@ -1,6 +1,3 @@
-/**
- * Created by amrazek on 21/03/16.
- */
 
 /// <reference path="../ref.ts" />
 
@@ -12,7 +9,8 @@ module portal {
         exerciseList: portal.Exercise[];
         exercise: portal.Exercise;
 
-        loadExercisesJson(): ng.IPromise<portal.Exercise[]>;
+        loadExercises(): ng.IPromise<portal.Exercise[]>;
+        loadExerciseHistory(user_id: number): ng.IPromise<json.IExerciseHistory[]>;
         getExerciseDetail(exerciseId: number): portal.Exercise;
     }
 
@@ -29,10 +27,17 @@ module portal {
             this.exerciseListByTypes = [];
         }
 
-        loadExercisesJson(): ng.IPromise<portal.Exercise[]> {
-            return this.$http.post(portal.config.api.url + '/data/exercises.json', {})
-                .then(function (response: IJsonExercises) {
+        loadExercises(): ng.IPromise<portal.Exercise[]> {
+            return this.$http.get(portal.config.api.url + 'exercises/', {})
+                .then(function (response: json.IExerciseList) {
                     return <Exercise[]>response.data.exercises;
+                });
+        }
+
+        loadExerciseHistory(user_id: number): ng.IPromise<json.IExerciseHistory[]> {
+            return this.$http.get(portal.config.api.url + 'user/' + user_id + '/history')
+                .then(function (response: json.IExerciseHistory[]) {
+                    return <json.IExerciseHistory[]>response;
                 });
         }
 

@@ -8,7 +8,7 @@ res/
 css/
 www/
 js/
-scss/*.css
-scss/*.css.map
-scss/**/*.css
-scss/**/*.css.map
+**/*.css
+**/*.css.maps
+.DS_Store
+npm-debug.log

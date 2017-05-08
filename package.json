@@ -34,12 +34,12 @@
     "scriptjs": "2.5.7",
     "serve-index": "1.7.2",
     "serve-static": "1.10.0",
-    "typescript": "1.8.2",
+    "typescript": "2.3.2",
     "typings": "0.7"
   },
   "devDependencies": {
     "angular-translate": "2.9.0",
-    "angular-translate-loader-url": "^2.15.1",
+    "angular-translate-loader-url": "2.15.1",
     "grunt": "0.4.5",
     "grunt-concurrent": "1.0.0",
     "grunt-connect-proxy": "0.2.0",
@@ -69,7 +69,8 @@
     "grunt-proxy": "0.0.3",
     "grunt-svgstore": "0.5.0",
     "grunt-text-replace": "0.4.0",
-    "grunt-tslint": "5.0.1",
+    "grunt-tslint": "4.0.0",
+    "tslint": "4.0.0",
     "grunt-typescript": "0.8.0",
     "grunt-usemin": "3.0.0"
   },

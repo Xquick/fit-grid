@@ -1,45 +1,37 @@
-/**
- * The dnd-list should always have a min-height,
- * otherwise you can't drop to it once it's empty
- */
-#workout tbody[dnd-list] {
-    min-height: 42px;
-    padding-left: 0px;
-}
+#workout [dnd-list] {
+    .dndDraggingSource {
+        display: none;
+    }
 
-/**
- * The dndDraggingSource class will be applied to
- * the source element of a drag operation. It makes
- * sense to hide it to give the user the feeling
- * that he's actually moving it.
- */
-#workout [dnd-list] .dndDraggingSource {
-    display: none;
-}
+    .dndPlaceholder {
+        background-color: #ddd;
+        display: block;
+        min-height: 42px;
+    }
 
-/**
- * An element with .dndPlaceholder class will be
- * added to the dnd-list while the user is dragging
- * over it.
- */
-#workout [dnd-list] .dndPlaceholder {
-    background-color: #ddd;
-    display: block;
-    min-height: 42px;
-}
-
-#workout [dnd-list] li {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    display: block;
-    padding: 10px 15px;
-    margin-bottom: -1px;
-}
-
-/**
- * Show selected elements in green
- */
-#workout [dnd-list] li.selected {
-    background-color: #dff0d8;
-    color: #3c763d;
+    li {
+        &.selected {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        ul li {
+            [dnd-handle]{
+                margin-right: 5px;
+            }
+            span {
+                display: inline-block;
+                &:first-letter {
+                    text-transform: capitalize;
+                }
+            }
+            background-color: #fff;
+            border: solid #ddd;
+            border-width: 1px 0 1px 0;
+            display: block;
+            padding: 10px;
+            margin-bottom: -1px;
+            height: 45px;
+            box-sizing: border-box;
+        }
+    }
 }

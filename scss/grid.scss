@@ -1,17 +1,26 @@
-.exercise{
-    &-name{
-
+#grid {
+    .day {
+        @include fixed-width(50px);
+        padding-left: 0;
+        padding-right: 0;
     }
-
-    &-type{
-        list-style: none;
+    .exercise {
+        @include fixed-width(180px);
 
         &-name {
 
         }
 
-        &-wrapper{
+        &-type {
+            list-style: none;
 
+            &-name {
+
+            }
+
+            &-wrapper {
+
+            }
         }
     }
 }

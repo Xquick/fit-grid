@@ -26,13 +26,13 @@ module.exports = function (grunt) {
         open: {
             delayed: {
                 path: '<%= config.url %>',
-                app: 'Chrome'
+                app: 'Google Chrome'
             }
         },
         typescript: {
             options: {
                 target: 'es5',
-                sourceMap: false,
+                sourceMap: true,
                 keepDirectoryHierarchy: false,
                 declaration: true,
                 experimentalDecorators: true

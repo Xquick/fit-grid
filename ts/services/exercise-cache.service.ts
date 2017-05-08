@@ -1,6 +1,3 @@
-/**
- * Created by amrazek on 10/07/16.
- */
 
 ///<reference path="../ref.ts"/>
 

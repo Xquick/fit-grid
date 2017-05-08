@@ -1,6 +1,3 @@
-/**
- * Created by amrazek on 21/03/16.
- */
 
 /// <reference path="ref.ts" />
 
@@ -13,9 +10,9 @@ module portal {
         }
     }
 
-    export var config: IConfig = {
+    export let config: IConfig = {
         api: {
-            url: 'http://fit-grid.localhost/'
+            url: 'http://fit-grid-api.localhost/api/'
         }
     }
 }

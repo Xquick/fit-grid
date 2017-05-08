@@ -6,16 +6,32 @@ div#workout(ng-controller="MainController as ctrl")
             h1.md-toolbar-tools {{'grid.workout.header'|translate}}
                 i.material-icons(ng-click="ctrl.toggleWorkout()" class="ui-pointer") close
         md-content
-                div(flex="100" )
-                    h3(ng-bind="type")
-                    ul( dnd-list="ctrl.$rootScope.selectedExerciseList"
+            ul(
+            dnd-list="ctrl.$rootScope.currentExerciseList"
+            dnd-allowed-types="['container']")
+
+                li(
+                ng-repeat="type in ctrl.$rootScope.currentExerciseList"
+                dnd-dragable="type"
+                dnd-moved="ctrl.onDropType($index)"
+                dnd-effect-allowed="move"
+                dnd-type="'container'"
+                dnd-draggable="type"
+                )
+                    h3(ng-bind="type.name")
+                    ul(
+                    dnd-list="type.exerciseList"
+                    dnd-allowed-types="[type.name]"
                     )
                         li.md-table-content-row(
-                        ng-repeat="selectedExercise in ctrl.$rootScope.selectedExerciseList"
-                        dnd-draggable="selectedExercise"
-                        dnd-moved="ctrl.onDropExercise($index)"
+                        ng-repeat="exercise in type.exerciseList"
+                        dnd-draggable="exercise"
+                        dnd-type="exercise.type"
+                        dnd-disable-if="exercise.type == 'unknown'"
+                        dnd-moved="ctrl.onDropExercise($index, exercise.type)"
                         dnd-effect-allowed="move"
-                            )
-                            span.handle(dnd-handle)
-                                i.material-icons drag_handle
-                            span(ng-bind="selectedExercise.name")
+                        )
+                            dnd-nodrag
+                                span.handle(dnd-handle)
+                                    i.material-icons drag_handle
+                                span.first-letter--upper(ng-bind="exercise.name")
