@@ -9,6 +9,11 @@ css/
 www/
 js/
 **/*.css
+ts/*.js
+ts/*.js.map
+*.js.map
 **/*.css.maps
 .DS_Store
 npm-debug.log
+scss/dragDrop.css.map
+ts/.baseDir.ts

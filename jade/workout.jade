@@ -2,20 +2,24 @@ div#workout(ng-controller="MainController as ctrl")
     md-button(ng-click="ctrl.toggleWorkout()" aria-label="close" class="fixed fixed--right-top" ng-bind="'new-workout.open'|translate")
 
     md-sidenav.md-sidenav-right(md-component-id="right" md-disable-backdrop md-is-open="true" md-whiteframe="4")
-        md-toolbar
-            h1.md-toolbar-tools {{'new-workout.header'|translate}}
-                i.material-icons(ng-click="ctrl.toggleWorkout()" class="ui-pointer") close
+        md-toolbar(layout="row")
+            input(
+            ng-model="ctrl.$rootScope.currentWorkout.name"
+            placeholder="{{'new-workout.header'|translate}}"
+            flex=80 layout="column")
+            div(flex="20" layout-align="center center" layout="column")
+                i.material-icons(ng-click="ctrl.toggleWorkout()") close
         md-content
             md-datepicker(
-            ng-model="ctrl.myDate"
+            ng-model="ctrl.$rootScope.currentWorkout.date"
             md-placeholder="{{'new-workout.datepicker.placeholder'|translate}}"
             aria-label=""
             flex="100")
             ul(
-            dnd-list="ctrl.$rootScope.currentExerciseList"
+            dnd-list="ctrl.$rootScope.currentWorkout.exerciseList"
             )
                 li.md-table-content-row(
-                ng-repeat="exercise in ctrl.$rootScope.currentExerciseList"
+                ng-repeat="exercise in ctrl.$rootScope.currentWorkout.exerciseList"
                 dnd-draggable="exercise"
                 dnd-moved="ctrl.onDropExercise($index, exercise.type)"
                 dnd-effect-allowed="move"
@@ -36,7 +40,7 @@ div#workout(ng-controller="MainController as ctrl")
                                     i.material-icons delete
             md-button.md-raised.md-primary.ui-button--default(
             ng-bind="'new-workout.save'|translate"
-            ng-if="ctrl.$rootScope.currentExerciseList.length > 0"
+            ng-if="ctrl.$rootScope.currentWorkout.exerciseList.length > 0"
             ng-click="ctrl.saveWorkout()"
             aria-label=""
             )

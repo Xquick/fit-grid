@@ -10,10 +10,14 @@ app-header(app-title="Grid")
                         thead(md-head)
                             tr(md-row)
                                 th
-                                th(ng-repeat="day in ctrl.calendarDays" ng-bind="day.date | formatDate" md-column)
+                                th(ng-repeat="day in ctrl.calendarDays" ng-bind="day.date | formatDate | translate" md-column)
                         tbody(md-body)
                             tr.exercise.md-table-content-row(ng-repeat="exercise in exerciseType.exerciseList track by $index" md-row)
                                 td.exercise(md-cell ng-click="ctrl.openExerciseDetailDialog($event,1)")
                                     span.first-letter--upper(ng-bind="exercise.name" )
                                 td.day(ng-repeat="day in ctrl.calendarDays track by $index" md-cell)
-                                    md-checkbox(ng-checked="ctrl.$rootScope.currentExerciseMap[exercise.id] && $index == 0 " aria-label="checkbox" ng-disabled="$index !== 0" ng-click="ctrl.toggleExerciseInCurrentWorkout(exercise)")
+                                    md-checkbox(
+                                    ng-checked="(ctrl.$rootScope.currentWorkout.exerciseMap[exercise.id] && $index == 0) || !!ctrl.didExerciseOccurreOnThisDay(exercise, day)"
+                                    aria-label="checkbox"
+                                    ng-disabled="$index !== 0"
+                                    ng-click="ctrl.toggleExerciseInCurrentWorkout(exercise)")

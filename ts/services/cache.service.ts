@@ -8,10 +8,11 @@ module portal {
         exerciseListByTypes: portal.IExerciseType[];
         exerciseList: portal.Exercise[];
         exercise: portal.Exercise;
+        updateCacheExerciseHistory(workout: ICurrentWorkout): void;
     }
 
     export class CacheService implements ICacheService {
-        protected $dataService;
+        protected $dataService: IDataService;
 
         exerciseListByTypes: portal.IExerciseType[];
         exerciseList: portal.Exercise[];
@@ -19,7 +20,7 @@ module portal {
 
         static $inject = ['$dataService'];
 
-        constructor($dataService) {
+        constructor($dataService: IDataService) {
             this.$dataService = $dataService;
 
             this.cacheExerciseList().then(() => {
@@ -32,38 +33,49 @@ module portal {
                 this.exerciseList = [];
                 _.each(exercises, (exercise: json.IExercise) => {
                     this.exerciseList.push(new Exercise(exercise));
-                });
-                this.exerciseListByTypes = [];
-
-                this.exerciseListByTypes = this.sortExercisesByTypes(exercises);
+                })
             }).then(() => {
                 return true;
             });
         }
 
         protected cacheExerciseHistory(user_id: number): void {
-            this.$dataService.loadExerciseHistory(user_id).then((historyList: json.IWorkoutHistory[]) => {
+            this.$dataService.loadExerciseHistory().then((historyList: json.IWorkoutHistory[]) => {
                 _.each(this.exerciseList, (exercise: Exercise) => {
                     _.each(historyList, (workoutHistory: json.IWorkoutHistory) => {
                         _.each(workoutHistory.schedule, (workoutSchedule: json.IWorkoutSchedule) => {
-                            let scheduledExercise: json.IExerciseWithSchedule = _.find(workoutSchedule.exerciseList, {name: exercise.name});
+                            let scheduledExercise: json.IExerciseWithSchedule = <json.IExerciseWithSchedule>_.find(workoutSchedule.exerciseList, {name: exercise.name});
 
                             if (scheduledExercise !== undefined) {
                                 if (exercise.schedule === undefined) {
-                                    console.log('updating', exercise);
                                     exercise.schedule = [];
                                 }
                                 exercise.schedule.push(<IExerciseSchedule>{
-                                    date: workoutSchedule.date,
+                                    date: moment(workoutSchedule.date, portal.config.date.shortFormat),
                                     setList: scheduledExercise.setList
                                 });
                             }
                         });
                     });
                 });
+                this.exerciseListByTypes = [];
+                this.exerciseListByTypes = this.sortExercisesByTypes(this.exerciseList);
+            });
+        }
 
-                console.log('this.exerciseList', this.exerciseList);
+        public updateCacheExerciseHistory(workout: ICurrentWorkout): void {
+            _.each(workout.exerciseList, (exercise: ICurrentWorkoutExercise) => {
+                let cachedExercise: Exercise = <Exercise>_.find(this.exerciseList, {id: exercise.id});
+                if (!cachedExercise.hasOwnProperty('schedule')) {
+                    cachedExercise.schedule = [];
+                }
 
+                let schedule: IExerciseSchedule = <IExerciseSchedule>{
+                    date: workout.date,
+                    setList: []
+                };
+
+                cachedExercise.schedule.push(schedule);
             });
         }
 
@@ -82,7 +94,13 @@ module portal {
                 if (typeof exerciseArr[exercise.type] === 'undefined') {
                     exerciseArr[exercise.type] = [];
                 }
-                exerciseArr[exercise.type].push(new Exercise(exercise));
+                let newExercise: Exercise = new Exercise(exercise);
+
+                if (exercise.hasOwnProperty('schedule')) {
+                    newExercise.schedule = exercise.schedule;
+                }
+                exerciseArr[exercise.type].push(newExercise);
+
             });
 
             for (let key in exerciseArr) {

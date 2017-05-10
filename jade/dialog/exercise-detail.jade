@@ -1,12 +1,12 @@
 //
    Created by amrazek on 22/03/16.
 
-md-dialog( ng-controller='GridController as ctrl' ng-init="advert = ctrl.$dataService.advert")
+md-dialog( ng-controller='GridController as ctrl')
 
     form
         md-toolbar
             .md-toolbar-tools
-                h2(ng-bind="advert.name")
+                h2(ng-bind="")
                 span(flex)
                 md-button.md-icon-button(ng-click='ctrl.cancel()')
                     md-icon(md-svg-src='glyphicons:remove',  class="ui-icon--size-normal")

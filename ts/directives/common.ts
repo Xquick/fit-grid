@@ -11,14 +11,6 @@ angular.module('portal')
             }
         };
     })
-    .directive('dateFormat', function () {
-        return {
-            restrict: 'A',
-            link: function (scope, el, attrs) {
-                console.log('Used date');
-            }
-        }
-    })
     .directive('rangeSlider', function () {
         return {
             restrict: "E",

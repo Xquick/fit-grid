@@ -1,2 +1,0 @@
-declare var $script: Function;
-

@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "angular": "registry:dt/angular#1.5.9+20170321201455",
+    "angular-material": "registry:dt/angular-material#1.1.0+20170315084937",
+    "angular-translate": "registry:dt/angular-translate#2.4.0+20170215085857",
+    "angular-ui-router": "registry:dt/angular-ui-router#1.1.5+20161222093745",
+    "lodash": "registry:dt/lodash#4.14.0+20170324155812",
+    "lunr": "registry:dt/lunr#0.5.4+20170324153728"
+  },
+  "globalDependencies": {
+    "jquery": "registry:dt/jquery#1.10.0+20170310222111",
+    "mathjs": "registry:dt/mathjs#0.0.0+20170126160507",
+    "moment": "registry:dt/moment#2.11.1+20161010105546",
+    "node": "registry:dt/node#7.0.0+20170322231424",
+    "scriptjs": "registry:dt/scriptjs#0.0.0+20161005184000"
+  }
+}

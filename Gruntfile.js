@@ -1,6 +1,3 @@
-/**
- * Created by amrazek on 20/03/16.
- */
 
 var _ = require('lodash');
 
@@ -26,23 +23,17 @@ module.exports = function (grunt) {
         open: {
             delayed: {
                 path: '<%= config.url %>',
-                app: 'Chrome'
+                app: 'Google Chrome'
             }
         },
-        typescript: {
-            options: {
-                target: 'es5',
-                sourceMap: true,
-                keepDirectoryHierarchy: false,
-                declaration: true,
-                experimentalDecorators: true
-            },
-            base: {
-                src: [
-                    'lib/typings/**/*.ts',
-                    'ts/**/*.ts'
-                ],
-                dest: 'js'
+        ts: {
+            default: {
+                tsconfig: true,
+                src: ['ts/**/*.ts'],
+                outDir: ['js'],
+                options: {
+                    fast: 'never'
+                }
             }
         },
 
@@ -152,7 +143,9 @@ module.exports = function (grunt) {
                     dot: true,
                     src: [
                         'www/*',
-                        'js/*'
+                        'js/*',
+                        'ts/**/*.js',
+                        'ts/**/*.js.map'
                     ]
                 }]
             }
@@ -232,22 +225,10 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-jade');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-open');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-tslint');
-    grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('grunt-typescript');
-    grunt.loadNpmTasks('grunt-svgstore');
+    require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('generate-sources', [
-        'typescript'
+        'ts'
     ]);
 
     grunt.registerTask('sprites', ['svgstore', 'replace']);

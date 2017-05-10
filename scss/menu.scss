@@ -18,6 +18,11 @@ main-menu md-sidenav#{$menu-class} {
     md-icon, i, div {
         color: $color-white;
     }
+
+    li{
+        margin-bottom: 10px;
+    }
+
     &-item {
         text-align: center;
         &-icon {

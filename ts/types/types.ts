@@ -1,6 +1,4 @@
-/**
- * Created by amrazek on 03/07/16.
- */
+
 
 /// <reference path="../ref.ts" />
 
@@ -22,7 +20,7 @@ module portal {
     }
 
     export interface IExerciseSchedule {
-        date: string;
+        date: moment.Moment;
         setList: ISet[]
     }
 
@@ -33,7 +31,7 @@ module portal {
 
     export interface ICalendarDays {
         weekday: number;
-        date: string;
+        date: moment.Moment;
         abbreviation: string;
     }
     export interface ISet {

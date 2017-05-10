@@ -6,10 +6,10 @@ module portal {
     export class GridController extends MainController {
         public calendarDays: ICalendarDays[] = [];
 
-        static $inject = ['$rootScope', '$scope', '$cacheService', '$mdDialog', '$mdSidenav', '$translate'];
+        static $inject = ['$rootScope', '$scope', '$cacheService', '$dataService', '$mdDialog', '$mdSidenav', '$translate'];
 
-        constructor($rootScope, $scope, $cacheService, $mdDialog, $mdSidenav, $translate) {
-            super($rootScope, $scope, $cacheService, $mdDialog, $mdSidenav, $translate);
+        constructor($rootScope, $scope, $cacheService, $dataService, $mdDialog, $mdSidenav, $translate) {
+            super($rootScope, $scope, $cacheService, $dataService, $mdDialog, $mdSidenav, $translate);
             this.initHistoryDates();
         }
 
@@ -32,24 +32,35 @@ module portal {
             this.$dialog.cancel();
         }
 
+        public didExerciseOccurreOnThisDay(exercise: Exercise, day: ICalendarDays): boolean {
+            let occurred = false;
+            if (exercise.hasOwnProperty('schedule')) {
+                _.each(exercise.schedule, (scheduleItem: IExerciseSchedule) => {
+                    if (moment(day.date.format(portal.config.date.mediumFormat)).isSame(moment(scheduleItem.date.format(portal.config.date.mediumFormat)))) {
+                        occurred = true;
+                    }
+                });
+
+                return occurred;
+            } else {
+                return false;
+            }
+        }
+
         private initHistoryDates() {
+            for (let i = 0; i < 10; i++) {
+                let date: moment.Moment = moment();
 
-            for (let i = 0; i < 5; i++) {
-                let date: Date = new Date();
-
-                date.setDate(date.getDate() - i);
-
-                let dd = date.getDate();
-                let mm = date.getMonth() + 1;
-                let y = date.getFullYear();
+                date = date.subtract(i, 'days');
 
                 let calendarDay: ICalendarDays = <ICalendarDays>{};
-                calendarDay.date = dd + '.' + mm + '.' + y;
-                calendarDay.weekday = date.getDay();
+                calendarDay.date = date;
+                calendarDay.weekday = date.day();
                 calendarDay.abbreviation = "";
                 this.calendarDays.push(calendarDay);
             }
         }
+
     }
     angular.module('portal').controller('GridController', portal.GridController);
 }
