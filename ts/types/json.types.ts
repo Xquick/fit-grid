@@ -26,6 +26,16 @@ module portal.json {
         setList: ISet[]
     }
 
+    export interface IWorkoutList {
+        data: IWorkout[];
+    }
+
+    export interface IWorkout {
+        id: number;
+        name: string;
+        exerciseList: Exercise[];
+    }
+
     export interface IWorkoutSchedule {
         date: string;
         exerciseList: IExerciseWithSchedule[];

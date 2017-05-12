@@ -11,7 +11,7 @@ div#workout(ng-controller="MainController as ctrl")
                 i.material-icons(ng-click="ctrl.toggleWorkout()") close
         md-content
             md-datepicker(
-            ng-model="ctrl.$rootScope.currentWorkout.date"
+            ng-model="ctrl.workoutDate"
             md-placeholder="{{'new-workout.datepicker.placeholder'|translate}}"
             aria-label=""
             flex="100")

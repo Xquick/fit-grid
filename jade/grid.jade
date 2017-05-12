@@ -1,4 +1,4 @@
-app-header(app-title="Grid")
+app-header(app-title="{{'title.grid'|translate}}")
 
 #grid(ng-controller="GridController as ctrl")
     div.exercise-type-wrapper(layout="row" flex="100" ng-repeat="exerciseType in ctrl.$cacheService.exerciseListByTypes track by $index")
@@ -9,15 +9,23 @@ app-header(app-title="Grid")
                     table(md-table md-row-select multiple)
                         thead(md-head)
                             tr(md-row)
-                                th
+                                th(md-column)
+                                th(md-column)
                                 th(ng-repeat="day in ctrl.calendarDays" ng-bind="day.date | formatDate | translate" md-column)
                         tbody(md-body)
                             tr.exercise.md-table-content-row(ng-repeat="exercise in exerciseType.exerciseList track by $index" md-row)
+                                td(md-cell)
+                                    md-checkbox(
+                                    ng-checked="ctrl.$rootScope.currentWorkout.exerciseMap[exercise.id]"
+                                    aria-label="checkbox"
+                                    ng-click="ctrl.toggleExerciseInCurrentWorkout(exercise)")
+
                                 td.exercise(md-cell ng-click="ctrl.openExerciseDetailDialog($event,1)")
                                     span.first-letter--upper(ng-bind="exercise.name" )
+
+
                                 td.day(ng-repeat="day in ctrl.calendarDays track by $index" md-cell)
                                     md-checkbox(
-                                    ng-checked="(ctrl.$rootScope.currentWorkout.exerciseMap[exercise.id] && $index == 0) || !!ctrl.didExerciseOccurreOnThisDay(exercise, day)"
+                                    ng-checked="ctrl.didExerciseOccurreOnThisDay(exercise, day)"
                                     aria-label="checkbox"
-                                    ng-disabled="$index !== 0"
-                                    ng-click="ctrl.toggleExerciseInCurrentWorkout(exercise)")
+                                    disabled="true")

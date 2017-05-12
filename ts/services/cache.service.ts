@@ -3,11 +3,15 @@
 
 module portal {
     'use strict';
+    import IWorkoutList = portal.json.IWorkoutList;
 
     export interface ICacheService {
         exerciseListByTypes: portal.IExerciseType[];
         exerciseList: portal.Exercise[];
         exercise: portal.Exercise;
+        userWorkouts: Workout[];
+
+        cacheUserWorkouts(): void;
         updateCacheExerciseHistory(workout: ICurrentWorkout): void;
     }
 
@@ -17,15 +21,23 @@ module portal {
         exerciseListByTypes: portal.IExerciseType[];
         exerciseList: portal.Exercise[];
         exercise: portal.Exercise;
+        userWorkouts: Workout[];
 
         static $inject = ['$dataService'];
 
         constructor($dataService: IDataService) {
             this.$dataService = $dataService;
-
-            this.cacheExerciseList().then(() => {
-                this.cacheExerciseHistory(1);
-            });
+            this.userWorkouts = [];
+            if (_.isEmpty(this.exerciseList)) {
+                console.log('something');
+                this.cacheExerciseList().then(() => {
+                    this.cacheExerciseHistory(1).then((success: boolean) => {
+                        if (success) {
+                            //Do things after exercises were all loaded with history
+                        }
+                    });
+                });
+            }
         }
 
         protected cacheExerciseList(): ng.IPromise<boolean> {
@@ -39,8 +51,8 @@ module portal {
             });
         }
 
-        protected cacheExerciseHistory(user_id: number): void {
-            this.$dataService.loadExerciseHistory().then((historyList: json.IWorkoutHistory[]) => {
+        protected cacheExerciseHistory(user_id: number): ng.IPromise<boolean> {
+            return this.$dataService.loadExerciseHistory().then((historyList: json.IWorkoutHistory[]) => {
                 _.each(this.exerciseList, (exercise: Exercise) => {
                     _.each(historyList, (workoutHistory: json.IWorkoutHistory) => {
                         _.each(workoutHistory.schedule, (workoutSchedule: json.IWorkoutSchedule) => {
@@ -58,8 +70,11 @@ module portal {
                         });
                     });
                 });
+
                 this.exerciseListByTypes = [];
                 this.exerciseListByTypes = this.sortExercisesByTypes(this.exerciseList);
+                console.log(this.exerciseListByTypes);
+                return true;
             });
         }
 
@@ -76,16 +91,30 @@ module portal {
                 };
 
                 cachedExercise.schedule.push(schedule);
+
+                _.extend(_.findWhere(this.exerciseList, {id: exercise.id}), cachedExercise);
+                this.exerciseListByTypes = this.sortExercisesByTypes(this.exerciseList);
             });
         }
 
-        /***
+
+        public cacheUserWorkouts(): void {
+            this.$dataService.loadUserWorkoutList().then((workoutList: json.IWorkout[]): void => {
+                if (_.isEmpty(this.userWorkouts)) {
+                    _.each(workoutList, (workout: json.IWorkout) => {
+                        this.userWorkouts.push(new Workout(workout));
+                    });
+                }
+            });
+        }
+
+        /*
+         * **
          * Returns exercises sorted by their type (e.g. type: 'back', type: 'chest')
          *
          * @param exercises: Exercise[]
          * @returns {IExerciseType[]} resulting into structure e.g. {'chest': {[Exercise1, Exercise5]}, 'back': {[...]}}
          */
-
         private sortExercisesByTypes(exercises: Exercise[]): IExerciseType[] {
             let exerciseArr: {[key: string]: Exercise[]} = {};
             let exercisesByType: IExerciseType[] = [];

@@ -8,12 +8,18 @@ module portal {
 
         static $inject = ['$rootScope', '$scope', '$cacheService', '$dataService', '$mdDialog', '$mdSidenav', '$translate'];
 
-        constructor($rootScope, $scope, $cacheService, $dataService, $mdDialog, $mdSidenav, $translate) {
+        constructor($rootScope: IExtendedRootScope,
+                    $scope: ng.IScope,
+                    $cacheService: ICacheService,
+                    $dataService: IDataService,
+                    $mdDialog: ng.material.IDialogService,
+                    $mdSidenav: ng.material.ISidenavService,
+                    $translate: ng.translate.ITranslateProvider) {
             super($rootScope, $scope, $cacheService, $dataService, $mdDialog, $mdSidenav, $translate);
             this.initHistoryDates();
         }
 
-        public openExerciseDetailDialog($event, exerciseId) {
+        public openExerciseDetailDialog($event:ng.IAngularEvent, exerciseId: number) {
             // this.$dataService.exercise = this.$dataService.getExerciseDetail(exerciseId);
             this.$dialog.show({
                 templateUrl: 'templates/dialog/exercise-detail.html',

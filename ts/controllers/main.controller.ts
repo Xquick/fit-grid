@@ -28,6 +28,8 @@ module portal {
         public $rootScope: IExtendedRootScope;
         public $scope: ng.IScope;
 
+        public workoutDate: Date;
+
         static $inject = ['$rootScope', '$scope', '$cacheService', '$dataService', '$mdDialog', '$mdSidenav', '$translate'];
 
         constructor($rootScope: IExtendedRootScope,
@@ -44,9 +46,8 @@ module portal {
             this.$sidenav = $mdSidenav;
             this.$rootScope = $rootScope;
             this.$scope = $scope;
-            this.$rootScope.currentWorkout = <ICurrentWorkout>{};
-            this.$rootScope.currentWorkout.exerciseList = [];
-            this.$rootScope.currentWorkout.exerciseMap = [];
+
+            this.initCurrentWorkout();
         }
 
         public onDropExercise(index: number, type: string) {
@@ -65,7 +66,7 @@ module portal {
          * @param exercise
          */
         public toggleExerciseInCurrentWorkout(exercise: Exercise) {
-            let selectedExerciseList = this.$rootScope.currentWorkout.exerciseList;
+            let selectedExerciseList: ICurrentWorkoutExercise[] = this.$rootScope.currentWorkout.exerciseList;
             let exerciseExists = _.find(selectedExerciseList, {name: exercise.name});
 
             if (!exerciseExists) {
@@ -78,7 +79,7 @@ module portal {
                 });
             } else {
                 this.$rootScope.currentWorkout.exerciseMap[exercise.id] = false;
-                _.without(selectedExerciseList, {name: exercise.name});
+                this.$rootScope.currentWorkout.exerciseList = <ICurrentWorkoutExercise[]>_.without(selectedExerciseList, _.findWhere(selectedExerciseList, {id: exercise.id}));
             }
         }
 
@@ -91,9 +92,16 @@ module portal {
         }
 
         public saveWorkout() {
-            // this.$rootScope.currentWorkout.date = moment(this.$rootScope.currentWorkout.date, portal.config.date.longFormat);
+            this.$rootScope.currentWorkout.date = moment.unix(this.workoutDate.getTime() / 1000);
             this.$dataService.persistWorkout(this.$rootScope.currentWorkout);
             this.$cacheService.updateCacheExerciseHistory(this.$rootScope.currentWorkout);
+            this.initCurrentWorkout();
+        }
+
+        private initCurrentWorkout() {
+            this.$rootScope.currentWorkout = <ICurrentWorkout>{};
+            this.$rootScope.currentWorkout.exerciseList = [];
+            this.$rootScope.currentWorkout.exerciseMap = [];
         }
     }
     angular.module('portal').controller('MainController', portal.MainController);

@@ -2,10 +2,12 @@
 
 module portal {
     'use strict';
+    import IWorkout = portal.json.IWorkout;
 
     export interface IDataService {
         loadExerciseList(): ng.IPromise<portal.Exercise[]>;
         loadExerciseHistory(): ng.IPromise<json.IWorkoutHistory[]>;
+        loadUserWorkoutList(): ng.IPromise<IWorkout[]>;
         getExerciseDetail(exerciseId: number): portal.Exercise;
         persistWorkout(workout: ICurrentWorkout): ng.IPromise<boolean>;
     }
@@ -38,15 +40,20 @@ module portal {
         }
 
         getExerciseDetail(exerciseId: number): portal.Exercise {
-            if (this.exerciseList) {
-                return _.find(this.exerciseList, {'id': exerciseId});
-            }
+            return <portal.Exercise>_.find(this.exerciseList, {'id': exerciseId});
+        }
+
+        loadUserWorkoutList(): ng.IPromise<IWorkout[]> {
+            return this.$http.get(portal.config.api.url + 'users/' + 1 + '/workouts', {})
+                .then(function (response: json.IWorkoutList) {
+                    return <IWorkout[]>response.data;
+                });
         }
 
         persistWorkout(workout: ICurrentWorkout): ng.IPromise<boolean> {
             return this.$http.post(portal.config.api.url + 'users/' + 1 + '/workouts', {
                 id: 1,
-                date: workout.date.format(portal.config.date.mediumFormat),
+                date: workout.date.format(portal.config.date.longFormat),
                 name: workout.name,
                 exerciseList: workout.exerciseList
 

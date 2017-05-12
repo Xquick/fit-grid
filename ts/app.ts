@@ -15,7 +15,6 @@ app.config(['$translateProvider', function ($translateProvider: angular.translat
     });
     $translateProvider.use('cz');
 
-
 }]).config(['$mdThemingProvider', function ($mdThemingProvider: angular.material.IThemingProvider): void {
     $mdThemingProvider.theme('default')
         .primaryPalette('blue')

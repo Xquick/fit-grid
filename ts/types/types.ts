@@ -12,6 +12,12 @@ module portal {
         schedule: IExerciseSchedule[];
     }
 
+    export interface IWorkout {
+        id: number;
+        name: string;
+        exerciseList: IExercise[];
+    }
+
     export interface ICurrentWorkoutExercise{
         id: number;
         name: string;
